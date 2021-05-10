@@ -11,7 +11,8 @@ module.exports = {
     parser: 'babel-eslint',
   },
   rules: {
-    'indent': ['error', 2],
+    indent: ['error', 2],
+    'linebreak-style': ['error', 'windows'],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
