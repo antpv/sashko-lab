@@ -11,12 +11,6 @@ const instance = axios.create({
     },
 });
 
-instance.interceptors.response.use(null, (error) => {
-    alert(error.response.data.message);
-
-    return Promise.reject(error);
-});
-
 export function setToken(token) {
     localStorage.setItem('auth_bearer', token);
 

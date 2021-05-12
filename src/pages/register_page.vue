@@ -57,8 +57,6 @@ export default {
                     firstName: 'first_name',
                     lastName: 'last_name',
                 }).then(() => {
-                    alert('Registred');
-
                     this.$router.push('/login');
                 });
             }

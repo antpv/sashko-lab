@@ -38,8 +38,6 @@ export default {
 
                 this.$root.$emit('changeAuthStatus', true);
 
-                alert('Authenticated');
-
                 this.$router.push('/');
             });
         },

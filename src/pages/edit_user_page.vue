@@ -1,50 +1,62 @@
 <template>
-    <div class="modal">
-        <h3>Edit user</h3>
-        <div class="field">
-            Email:
-            <input type="text" v-model="email">
+    <div>
+        <div class="modal">
+            <h3>Edit user</h3>
+            <div class="field">
+                Email:
+                <input type="text" v-model="email">
+            </div>
+            <div class="field">
+                First name:
+                <input type="text" v-model="firstName">
+            </div>
+            <div class="field">
+                Last name:
+                <input type="text" v-model="lastName">
+            </div>
+            <div class="field">
+                Password:
+                <input type="password" v-model="password">
+            </div>
+            <div class="field">
+                Submit password:
+                <input type="password"  v-model="confirmPassword">
+            </div>
+            <div class="field">
+                Role:
+                <select name="roles" v-model="isAdmin" disabled>
+                    <option :value="true">Admin</option>
+                    <option :value="false">Regular</option>
+                </select>
+            </div>
+            <div class="field">
+                <input
+                @click="onSubmit"
+                :disabled="fetchingUser || beeingUpdatedUser"
+                type="submit"
+                value="Save"
+                >
+                <input type="reset" value="Cancel">
+            </div>
         </div>
-        <div class="field">
-            First name:
-            <input type="text" v-model="firstName">
-        </div>
-        <div class="field">
-            Last name:
-            <input type="text" v-model="lastName">
-        </div>
-        <div class="field">
-            Password:
-            <input type="password" v-model="password">
-        </div>
-        <div class="field">
-            Submit password:
-            <input type="password"  v-model="confirmPassword">
-        </div>
-        <div class="field">
-            Role:
-            <select name="roles" v-model="isAdmin" disabled>
-                <option :value="true">Admin</option>
-                <option :value="false">Regular</option>
-            </select>
-        </div>
-        <div class="field">
-            <input
-              @click="onSubmit"
-              :disabled="fetchingUser || beeingUpdatedUser"
-              type="submit"
-              value="Save"
-            >
-            <input type="reset" value="Cancel">
-        </div>
+        <base-notification
+            v-show="isShowNotification"
+            type="error"
+        >
+            {{ notification }}
+        </base-notification>
     </div>
 </template>
 
 <script>
+import BaseNotification from '../components/base_notification.vue';
 import userService from '../services/user_service';
 
 export default {
     name: 'EditUserPage',
+    components: {
+        BaseNotification,
+    },
     data() {
         return {
             email: '',
@@ -56,6 +68,9 @@ export default {
             uid: null,
             fetchingUser: false,
             beeingUpdatedUser: false,
+
+            notification: '',
+            isShowNotification: false,
         };
     },
     created() {
@@ -89,7 +104,15 @@ export default {
                     this.beeingUpdatedUser = false;
                 });
             } else {
-                alert('Please, confirm password');
+                this.notification = 'Please, confirm password';
+                this.isShowNotification = true;
+
+                this.lastNotificationTimerId = setTimeout(() => {
+                    clearTimeout(this.lastNotificationTimerId);
+
+                    this.notification = '';
+                    this.isShowNotification = false;
+                }, 1000);
             }
         },
     },
