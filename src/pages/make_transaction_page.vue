@@ -3,7 +3,7 @@
         <h3>Make transaction</h3>
         <div class="field">
             From wallet:
-            <select name="roles" v-model="fromWalletUid">
+            <select v-model="fromWalletUid">
                 <option v-for="wallet in wallets" :key="wallet.uid" :value="wallet.uid">
                     {{ wallet.name }} (uid: {{ wallet.uid }} | funds: {{ wallet.funds}})
                 </option>

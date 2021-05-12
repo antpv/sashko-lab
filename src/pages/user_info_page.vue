@@ -25,25 +25,24 @@
             <input type="text" disabled :value="balance">
         </div>
         <div>
-            Transactions
+            Transactions by wallet
+            <select v-model="selWallet" @change="onSelectWallet">
+                <option v-for="wallet in wallets" :key="wallet.uid" :value="wallet.uid">
+                    {{ wallet.name }} (uid: {{ wallet.uid }} | funds: {{ wallet.funds}})
+                </option>
+            </select>
             <table border="1" id="transactions">
                 <tr>
                     <td>datetime</td>
                     <td>amount</td>
-                    <td>sender</td>
-                    <td>receiver</td>
+                    <td>sender uid</td>
+                    <td>receiver uid</td>
                 </tr>
-                <tr>
-                    <td>23.03.2021</td>
-                    <td>80</td>
-                    <td>Sasha</td>
-                    <td>ElonMusk</td>
-                </tr>
-                <tr>
-                    <td>24.03.2021</td>
-                    <td>100</td>
-                    <td>Mama</td>
-                    <td>Sasha</td>
+                <tr v-for="transaction in transactions" :key="transaction.uid">
+                    <td>{{ UtcFromIso(transaction.datetime) }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.from_wallet }}</td>
+                    <td>{{ transaction.to_wallet }}</td>
                 </tr>
             </table>
         </div>
@@ -66,6 +65,8 @@ export default {
 
             balance: 0,
             transactions: [],
+            wallets: [],
+            selWallet: '',
         };
     },
     created() {
@@ -77,9 +78,23 @@ export default {
             this.uid = response.data.uid;
         });
 
-        walletService.getWallet().then((response) => {
-            this.transactions = response.data;
+        walletService.getWallets().then((response) => {
+            this.wallets = response.data;
         });
+    },
+    methods: {
+        onSelectWallet(event) {
+            this.selWallet = event.target.value;
+
+            walletService.getTransactionsByWallet(this.selWallet).then((response) => {
+                this.transactions = response.data;
+            });
+        },
+        UtcFromIso(isoString) {
+            const date = new Date(isoString);
+
+            return date.toUTCString();
+        },
     },
 };
 </script>

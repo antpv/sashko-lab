@@ -4,6 +4,10 @@ function getWallets() {
     return apiService.get('/wallet');
 }
 
+function getTransactionsByWallet(walletUid) {
+    return apiService.get(`/wallet/${walletUid}/transactions`);
+}
+
 function createWallet({ name }) {
     return apiService.post('/wallet', {
         name,
@@ -33,6 +37,7 @@ function withdraw({ fromWalletUid, amount }) {
 
 export default {
     getWallets,
+    getTransactionsByWallet,
     createWallet,
     createDeposit,
     withdraw,

@@ -3,7 +3,7 @@
         <h3>Deposit</h3>
         <div class="field">
             Select wallet:
-            <select name="roles" v-model="walletUid">
+            <select v-model="walletUid">
                 <option v-for="wallet in wallets" :key="wallet.uid" :value="wallet.uid">
                     {{ wallet.name }} (uid: {{ wallet.uid }} | funds: {{ wallet.funds}})
                 </option>
