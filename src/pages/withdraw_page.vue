@@ -36,7 +36,7 @@ export default {
                 fromWalletUid: this.walletUid,
                 amount: this.amount,
             }).then(() => {
-                alert(`Wallet with uid ${this.walletUid} replenished`);
+                alert(`Wallet with uid ${this.walletUid} withdrawn`);
 
                 this.walletUid = '';
                 this.amount = '';
