@@ -1,16 +1,13 @@
 import apiService from './api_service';
 
-const PATH_AUTH = '/auth';
-const PATH_REGISTER = '/user';
-
 function authUser({ email, password }) {
-  return apiService.post(PATH_AUTH, { email, password });
+  return apiService.post('/auth', { username: email, password });
 }
 
 function registerUser({
   email, password, firstName, lastName,
 }) {
-  return apiService.post(PATH_REGISTER, {
+  return apiService.post('/user', {
     email,
     password,
     first_name: firstName,
@@ -18,7 +15,12 @@ function registerUser({
   });
 }
 
+function getUserByUid() {
+  return apiService.get('/user');
+}
+
 export default {
   authUser,
   registerUser,
+  getUserByUid,
 };

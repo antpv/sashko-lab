@@ -17,21 +17,28 @@
 </template>
 
 <script>
-import authService from '../services/auth_service';
+import userService from '../services/user_service';
+import { setToken } from '../services/api_service';
 
 export default {
   name: 'LoginPage',
   data() {
     return {
-      email: '',
-      password: '',
+      email: 'admin',
+      password: 'admin',
     };
   },
   methods: {
     onSubmit() {
-      authService.authUser({
+      userService.authUser({
         email: this.email,
         password: this.password,
+      }).then((response) => {
+        setToken(response.data.access_token);
+
+        this.$root.$emit('authenticated');
+
+        alert('Authenticated');
       });
     },
     onCancel() {

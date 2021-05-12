@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import authService from '../services/auth_service';
+import userService from '../services/user_service';
 
 export default {
   name: 'RegisterPage',
@@ -46,11 +46,13 @@ export default {
   },
   methods: {
     onSubmit() {
-      authService.registerUser({
+      userService.registerUser({
         email: this.email,
         password: this.password,
         firstName: 'first_name',
         lastName: 'last_name',
+      }).then(() => {
+        alert('Registred');
       });
     },
     onCancel() {
