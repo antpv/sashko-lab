@@ -3,27 +3,47 @@
     <h3>Withdraw</h3>
     <div class="field">
       Enter amount
-      <input type="number">
+      <input type="number" v-model="amount">
     </div>
     <div class="field">
-      Enter card number:
-      <input type="text">
+      Enter wallet uid:
+      <input type="text" v-model="fromWallet">
     </div>
     <div class="field">
-      <input type="submit" value="Withdraw">
+      <input @click="onSubmit" type="submit" value="Withdraw" :disabled="beeingWithdrawn">
       <input type="reset" value="Cancel">
     </div>
   </div>
 </template>
 
 <script>
-// import userService from '../services/user_service';
+import walletService from '../services/wallet_service';
 
 export default {
   name: 'WithdrawPage',
   data() {
-    return {};
+    return {
+      beeingWithdrawn: false,
+      fromWallet: '',
+      amount: '',
+    };
   },
-  methods: {},
+  methods: {
+    onSubmit() {
+      this.beeingWithdrawn = true;
+
+      walletService.withdraw({
+        fromWallet: this.fromWallet,
+        amount: this.amount,
+      }).then(() => {
+        alert(`Wallet with uid ${this.walletUid} replenished`);
+
+        this.walletUid = '';
+        this.amount = '';
+      }).finally(() => {
+        this.beeingWithdrawn = false;
+      });
+    },
+  },
 };
 </script>

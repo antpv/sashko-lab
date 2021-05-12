@@ -9,6 +9,9 @@
       <router-link to="/edit"><span class="button">Edit user</span></router-link>
       <router-link to="/delete_user"><span class="button">Delete user</span></router-link>
       <router-link to="/deposit"><span class="button">Deposit</span></router-link>
+      <router-link to="/make_wallet">
+        <span class="button">Make wallet</span>
+      </router-link>
       <router-link to="/make_transaction">
         <span class="button">Make transaction</span>
       </router-link>

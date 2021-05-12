@@ -2,36 +2,48 @@
     <div class="modal">
         <h3>Deposit</h3>
         <div class="field">
+            Enter wallet uid:
+            <input type="text" v-model="walletUid">
+        </div>
+        <div class="field">
             Enter amount
-            <input type="number">
+            <input type="number" v-model="amount">
         </div>
         <div class="field">
-            Enter card number:
-            <input type="text">
-        </div>
-        <div class="field">
-            Enter date from card:
-            <input type="text">
-        </div>
-        <div class="field">
-            Enter cvv code:
-            <input type="text">
-        </div>
-        <div class="field">
-            <input type="submit" value="Deposit">
+            <input @click="onSubmit" type="submit" value="Send" :disabled="beeingReplenished">
             <input type="reset" value="Cancel">
         </div>
     </div>
 </template>
 
 <script>
-// import userService from '../services/user_service';
+import walletService from '../services/wallet_service';
 
 export default {
   name: 'DepositPage',
   data() {
-    return {};
+    return {
+      beeingReplenished: false,
+      walletUid: '',
+      amount: '',
+    };
   },
-  methods: {},
+  methods: {
+    onSubmit() {
+      this.beeingReplenished = true;
+
+      walletService.createDeposit({
+        walletUid: this.walletUid,
+        amount: this.amount,
+      }).then(() => {
+        alert(`Wallet with uid ${this.walletUid} replenished`);
+
+        this.walletUid = '';
+        this.amount = '';
+      }).finally(() => {
+        this.beeingReplenished = false;
+      });
+    },
+  },
 };
 </script>

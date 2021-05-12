@@ -8,6 +8,7 @@ import DeleteUserPage from '../pages/delete_user_page.vue';
 import DepositPage from '../pages/deposit_page.vue';
 import MakeTransactionPage from '../pages/make_transaction_page.vue';
 import WithdrawPage from '../pages/withdraw_page.vue';
+import MakeWalletPage from '../pages/make_wallet_page.vue';
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/deposit',
     name: 'DepositPage',
     component: DepositPage,
+  },
+  {
+    path: '/make_wallet',
+    name: 'MakeWalletPage',
+    component: MakeWalletPage,
   },
   {
     path: '/make_transaction',

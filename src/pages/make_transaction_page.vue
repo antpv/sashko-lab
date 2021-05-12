@@ -2,15 +2,15 @@
     <div class="modal">
         <h3>Make transaction</h3>
         <div class="field">
-            Enter receiver username:
-            <input type="text">
+            Enter wallet uid:
+            <input type="text" v-model="walletUid">
         </div>
         <div class="field">
             Enter amount
-            <input type="number">
+            <input type="number" v-model="amount">
         </div>
         <div class="field">
-            <input @click="onSubmit" type="submit" value="Send" :disabled="beeingCreatedWallet">
+            <input @click="onSubmit" type="submit" value="Send" :disabled="beeingReplenished">
             <input type="reset" value="Cancel">
         </div>
     </div>
@@ -23,17 +23,25 @@ export default {
   name: 'MakeTransactionPage',
   data() {
     return {
-      beeingCreatedWallet: false,
+      beeingReplenished: false,
+      walletUid: '',
+      amount: '',
     };
   },
   methods: {
     onSubmit() {
-      this.beeingCreatedWallet = true;
+      this.beeingReplenished = true;
 
-      walletService.createWallet({}).then((response) => {
-        console.log(response);
+      walletService.createDeposit({
+        walletUid: this.walletUid,
+        amount: this.amount,
+      }).then(() => {
+        alert(`Wallet with uid ${this.walletUid} replenished`);
+
+        this.walletUid = '';
+        this.amount = '';
       }).finally(() => {
-        this.beeingCreatedWallet = false;
+        this.beeingReplenished = false;
       });
     },
   },
