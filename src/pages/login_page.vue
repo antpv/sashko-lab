@@ -10,7 +10,7 @@
       <input v-model="password" type="password">
     </div>
     <div class="field">
-      <input @click="onSubmit" type="submit" value="Sign in">
+      <input @click="onSubmit" type="submit" value="Log in">
       <input @click="onCancel" type="reset" value="Cancel">
     </div>
   </div>
@@ -24,8 +24,8 @@ export default {
   name: 'LoginPage',
   data() {
     return {
-      email: 'admin',
-      password: 'admin',
+      email: '',
+      password: '',
     };
   },
   methods: {
@@ -36,9 +36,11 @@ export default {
       }).then((response) => {
         setToken(response.data.access_token);
 
-        this.$root.$emit('authenticated');
+        this.$root.$emit('changeAuthStatus', true);
 
         alert('Authenticated');
+
+        this.$router.push('/');
       });
     },
     onCancel() {

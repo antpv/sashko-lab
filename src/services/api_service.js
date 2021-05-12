@@ -18,6 +18,8 @@ export function setToken(token) {
 }
 
 export function removeToken() {
+  localStorage.removeItem('auth_bearer');
+
   delete instance.defaults.headers.common.Authorization;
 }
 

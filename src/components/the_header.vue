@@ -1,8 +1,10 @@
 <template>
   <div id="header">
-    <router-link to="/register"><span class="button">Sign in</span></router-link>
-    <router-link to="/login"><span class="button">Log in</span></router-link>
-    <template v-if="isAuthenticated">
+    <template v-if="!isAuthenticated">
+      <router-link to="/register"><span class="button">Sign up</span></router-link>
+      <router-link to="/login"><span class="button">Log in</span></router-link>
+    </template>
+    <template v-else>
       <router-link to="/user_info"><span class="button">User info</span></router-link>
       <router-link to="/edit"><span class="button">Edit user</span></router-link>
       <router-link to="/delete_user"><span class="button">Delete user</span></router-link>
@@ -11,7 +13,7 @@
         <span class="button">Make transaction</span>
       </router-link>
       <router-link to="/withdraw"><span class="button">Withdraw</span></router-link>
-      <router-link @click="removeToken" to="/"><span class="button">Log out</span></router-link>
+      <router-link to="/" @click.native="onLogout"><span class="button">Log out</span></router-link>
     </template>
     <span class="mobile">
       <span><h1>≡ PayPayPay</h1></span>
@@ -31,7 +33,11 @@ export default {
     },
   },
   methods: {
-    removeToken,
+    onLogout() {
+      this.$root.$emit('changeAuthStatus', false);
+
+      removeToken();
+    },
   },
 };
 </script>

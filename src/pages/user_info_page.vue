@@ -3,22 +3,26 @@
     <h3>User info</h3>
     <div>
       Email:
-      <input type="text" disabled value="myemail@gmail.com">
+      <input type="text" disabled :value="email">
     </div>
     <div>
-      Username:
-      <input type="text" disabled value="Sasha">
+      First name:
+      <input type="text" disabled :value="firstName">
+    </div>
+    <div>
+      Last name:
+      <input type="text" disabled :value="lastName">
     </div>
     <div>
       Role:
-      <select name="roles" disabled>
-        <option selected value="Admin">Admin</option>
-        <option value="Regular">Regular</option>
+      <select name="roles" disabled v-model="isAdmin">
+        <option :value="true">Admin</option>
+        <option :value="false">Regular</option>
       </select>
     </div>
     <div>
       Ballance:
-      <input type="text" disabled value="100">
+      <input type="text" disabled :value="balance">
     </div>
     <div>
       Transactions
@@ -48,20 +52,34 @@
 
 <script>
 import userService from '../services/user_service';
+import walletService from '../services/wallet_service';
 
 export default {
   name: 'UserInfoPage',
   data() {
-    return {};
+    return {
+      email: '',
+      firstName: '',
+      lastName: '',
+      isAdmin: false,
+      uid: null,
+
+      balance: 0,
+      transactions: [],
+    };
   },
   created() {
-    const userUid = localStorage.getItem('user_uid');
-
-    userService.getUserByUid(userUid).then((response) => {
-      console.log(response);
+    userService.getMyselfUser().then((response) => {
+      this.email = response.data.email;
+      this.firstName = response.data.first_name;
+      this.lastName = response.data.last_name;
+      this.isAdmin = response.data.is_admin;
+      this.uid = response.data.uid;
     });
-  },
-  methods: {
+
+    walletService.getWallet().then((response) => {
+      this.transactions = response.data;
+    });
   },
 };
 </script>

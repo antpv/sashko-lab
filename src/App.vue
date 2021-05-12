@@ -25,15 +25,15 @@ export default {
       isAuthenticated: hasBearerToken,
     };
   },
-  mounted() {
-    this.$root.$on('authenticated', this.onAuthenticated);
+  created() {
+    this.$root.$on('changeAuthStatus', this.onChangeAuthStatus);
   },
   beforeDestroy() {
-    this.$root.$off('authenticated', this.onAuthenticated);
+    this.$root.$off('changeAuthStatus', this.onChangeAuthStatus);
   },
   methods: {
-    onAuthenticated() {
-      this.isAuthenticated = true;
+    onChangeAuthStatus(value) {
+      this.isAuthenticated = value;
     },
   },
 };

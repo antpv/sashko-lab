@@ -1,6 +1,6 @@
 <template>
   <div class="modal">
-    <h3>Sign in</h3>
+    <h3>Sign up</h3>
     <div class="field">
       Enter your email:
       <input v-model="email" type="text">
@@ -15,17 +15,17 @@
     </div>
     <div class="field">
       Submit your password:
-      <input type="password">
+      <input type="password" v-model="confirmPassword">
     </div>
     <div class="field">
       Select role:
-      <select name="roles">
+      <select name="roles" disabled>
         <option value="Admin">Admin</option>
-        <option value="Regular">Regular</option>
+        <option value="Regular" selected>Regular</option>
       </select>
     </div>
     <div class="field">
-      <input @click="onSubmit" type="submit" value="Sign in">
+      <input @click="onSubmit" type="submit" value="Sign up">
       <input @click="onCancel" type="reset" value="Cancel">
     </div>
   </div>
@@ -40,20 +40,28 @@ export default {
     return {
       email: '',
       password: '',
+      confirmPassword: '',
       username: '',
       role: '',
     };
   },
   methods: {
     onSubmit() {
-      userService.registerUser({
-        email: this.email,
-        password: this.password,
-        firstName: 'first_name',
-        lastName: 'last_name',
-      }).then(() => {
-        alert('Registred');
-      });
+      const hasPassword = this.password.length;
+      const passwordConfirmed = this.password === this.confirmPassword;
+
+      if (hasPassword && passwordConfirmed) {
+        userService.registerUser({
+          email: this.email,
+          password: this.password,
+          firstName: 'first_name',
+          lastName: 'last_name',
+        }).then(() => {
+          alert('Registred');
+
+          this.$router.push('/login');
+        });
+      }
     },
     onCancel() {
       this.email = '';
