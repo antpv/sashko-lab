@@ -21,25 +21,25 @@
 import walletService from '../services/wallet_service';
 
 export default {
-  name: 'MakeWalletPage',
-  data() {
-    return {
-      walletName: '',
-      beeingCreatedWallet: false,
-    };
-  },
-  methods: {
-    onSubmit() {
-      this.beeingCreatedWallet = true;
-
-      walletService.createWallet({ name: this.walletName }).then((response) => {
-        alert(`Wallet ${this.walletName} with uid ${response.data.uid} created`);
-
-        this.walletName = '';
-      }).finally(() => {
-        this.beeingCreatedWallet = false;
-      });
+    name: 'MakeWalletPage',
+    data() {
+        return {
+            walletName: '',
+            beeingCreatedWallet: false,
+        };
     },
-  },
+    methods: {
+        onSubmit() {
+            this.beeingCreatedWallet = true;
+
+            walletService.createWallet({ name: this.walletName }).then((response) => {
+                alert(`Wallet ${this.walletName} with uid ${response.data.uid} created`);
+
+                this.walletName = '';
+            }).finally(() => {
+                this.beeingCreatedWallet = false;
+            });
+        },
+    },
 };
 </script>

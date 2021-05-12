@@ -2,8 +2,16 @@
     <div class="modal">
         <h3>Make transaction</h3>
         <div class="field">
-            Enter wallet uid:
-            <input type="text" v-model="walletUid">
+            From wallet:
+            <select name="roles" v-model="fromWalletUid">
+                <option v-for="wallet in wallets" :key="wallet.uid" :value="wallet.uid">
+                    {{ wallet.name }} (uid: {{ wallet.uid }} | funds: {{ wallet.funds}})
+                </option>
+            </select>
+        </div>
+        <div class="field">
+            To wallet uid:
+            <input type="text" v-model="toWalletUid">
         </div>
         <div class="field">
             Enter amount
@@ -20,30 +28,39 @@
 import walletService from '../services/wallet_service';
 
 export default {
-  name: 'MakeTransactionPage',
-  data() {
-    return {
-      beeingReplenished: false,
-      walletUid: '',
-      amount: '',
-    };
-  },
-  methods: {
-    onSubmit() {
-      this.beeingReplenished = true;
+    name: 'MakeTransactionPage',
+    data() {
+        return {
+            beeingReplenished: false,
+            toWalletUid: '',
+            fromWalletUid: '',
+            amount: '',
 
-      walletService.createDeposit({
-        walletUid: this.walletUid,
-        amount: this.amount,
-      }).then(() => {
-        alert(`Wallet with uid ${this.walletUid} replenished`);
-
-        this.walletUid = '';
-        this.amount = '';
-      }).finally(() => {
-        this.beeingReplenished = false;
-      });
+            wallets: [],
+        };
     },
-  },
+    created() {
+        walletService.getWallets().then((response) => {
+            this.wallets = response.data;
+        });
+    },
+    methods: {
+        onSubmit() {
+            this.beeingReplenished = true;
+
+            walletService.sendFunds({
+                toWalletUid: this.toWalletUid,
+                fromWalletUid: this.fromWalletUid,
+                amount: this.amount,
+            }).then(() => {
+                alert(`Wallet with uid ${this.toWalletUid} replenished`);
+
+                this.toWalletUid = '';
+                this.amount = '';
+            }).finally(() => {
+                this.beeingReplenished = false;
+            });
+        },
+    },
 };
 </script>

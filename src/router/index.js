@@ -13,57 +13,57 @@ import MakeWalletPage from '../pages/make_wallet_page.vue';
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/register',
-    name: 'RegisterPage',
-    component: RegisterPage,
-  },
-  {
-    path: '/login',
-    name: 'LoginPage',
-    component: LoginPage,
-  },
-  {
-    path: '/user_info',
-    name: 'UserInfoPage',
-    component: UserInfoPage,
-  },
-  {
-    path: '/edit',
-    name: 'EditUserPage',
-    component: EditUserPage,
-  },
-  {
-    path: '/delete_user',
-    name: 'DeleteUserPage',
-    component: DeleteUserPage,
-  },
-  {
-    path: '/deposit',
-    name: 'DepositPage',
-    component: DepositPage,
-  },
-  {
-    path: '/make_wallet',
-    name: 'MakeWalletPage',
-    component: MakeWalletPage,
-  },
-  {
-    path: '/make_transaction',
-    name: 'MakeTransactionPage',
-    component: MakeTransactionPage,
-  },
-  {
-    path: '/withdraw',
-    name: 'WithdrawPage',
-    component: WithdrawPage,
-  },
+    {
+        path: '/register',
+        name: 'RegisterPage',
+        component: RegisterPage,
+    },
+    {
+        path: '/login',
+        name: 'LoginPage',
+        component: LoginPage,
+    },
+    {
+        path: '/user_info',
+        name: 'UserInfoPage',
+        component: UserInfoPage,
+    },
+    {
+        path: '/edit',
+        name: 'EditUserPage',
+        component: EditUserPage,
+    },
+    {
+        path: '/delete_user',
+        name: 'DeleteUserPage',
+        component: DeleteUserPage,
+    },
+    {
+        path: '/deposit',
+        name: 'DepositPage',
+        component: DepositPage,
+    },
+    {
+        path: '/make_wallet',
+        name: 'MakeWalletPage',
+        component: MakeWalletPage,
+    },
+    {
+        path: '/make_transaction',
+        name: 'MakeTransactionPage',
+        component: MakeTransactionPage,
+    },
+    {
+        path: '/withdraw',
+        name: 'WithdrawPage',
+        component: WithdrawPage,
+    },
 ];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes,
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes,
 });
 
 export default router;

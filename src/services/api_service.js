@@ -3,24 +3,30 @@ import axios from 'axios';
 const API_URL = 'http://89c79931e605.ngrok.io/api/v1';
 
 const instance = axios.create({
-  baseURL: API_URL,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
+    baseURL: API_URL,
+    timeout: 10000,
+    headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+    },
+});
+
+instance.interceptors.response.use(null, (error) => {
+    alert(error.response.data.message);
+
+    return Promise.reject(error);
 });
 
 export function setToken(token) {
-  localStorage.setItem('auth_bearer', token);
+    localStorage.setItem('auth_bearer', token);
 
-  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 
 export function removeToken() {
-  localStorage.removeItem('auth_bearer');
+    localStorage.removeItem('auth_bearer');
 
-  delete instance.defaults.headers.common.Authorization;
+    delete instance.defaults.headers.common.Authorization;
 }
 
 export default instance;

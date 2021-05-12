@@ -13,29 +13,29 @@ const bearerToken = localStorage.getItem('auth_bearer');
 const hasBearerToken = bearerToken !== null;
 
 if (hasBearerToken) {
-  setToken(bearerToken);
+    setToken(bearerToken);
 }
 
 export default {
-  components: {
-    TheHeader,
-  },
-  data() {
-    return {
-      isAuthenticated: hasBearerToken,
-    };
-  },
-  created() {
-    this.$root.$on('changeAuthStatus', this.onChangeAuthStatus);
-  },
-  beforeDestroy() {
-    this.$root.$off('changeAuthStatus', this.onChangeAuthStatus);
-  },
-  methods: {
-    onChangeAuthStatus(value) {
-      this.isAuthenticated = value;
+    components: {
+        TheHeader,
     },
-  },
+    data() {
+        return {
+            isAuthenticated: hasBearerToken,
+        };
+    },
+    created() {
+        this.$root.$on('changeAuthStatus', this.onChangeAuthStatus);
+    },
+    beforeDestroy() {
+        this.$root.$off('changeAuthStatus', this.onChangeAuthStatus);
+    },
+    methods: {
+        onChangeAuthStatus(value) {
+            this.isAuthenticated = value;
+        },
+    },
 };
 </script>
 

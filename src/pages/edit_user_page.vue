@@ -44,56 +44,54 @@
 import userService from '../services/user_service';
 
 export default {
-  name: 'EditUserPage',
-  data() {
-    return {
-      email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      confirmPassword: '',
-      isAdmin: false,
-      uid: null,
-      fetchingUser: false,
-      beeingUpdatedUser: false,
-    };
-  },
-  created() {
-    this.fetchingUser = true;
-
-    userService.getMyselfUser().then((response) => {
-      this.email = response.data.email;
-      this.firstName = response.data.first_name;
-      this.lastName = response.data.last_name;
-      this.isAdmin = response.data.is_admin;
-      this.uid = response.data.uid;
-    }).finally(() => {
-      this.fetchingUser = false;
-    });
-  },
-  methods: {
-    onSubmit() {
-      const hasPassword = this.password.length;
-      const passwordConfirmed = this.password === this.confirmPassword;
-
-      if (hasPassword && passwordConfirmed) {
-        this.beeingUpdatedUser = true;
-
-        userService.updateUserByUid(this.uid, {
-          password: this.password,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          isAdmin: this.isAdmin,
-          email: this.email,
-        }).then((response) => {
-          console.log(response);
-        }).finally(() => {
-          this.beeingUpdatedUser = false;
-        });
-      } else {
-        alert('Please, confirm password');
-      }
+    name: 'EditUserPage',
+    data() {
+        return {
+            email: '',
+            firstName: '',
+            lastName: '',
+            password: '',
+            confirmPassword: '',
+            isAdmin: false,
+            uid: null,
+            fetchingUser: false,
+            beeingUpdatedUser: false,
+        };
     },
-  },
+    created() {
+        this.fetchingUser = true;
+
+        userService.getMyselfUser().then((response) => {
+            this.email = response.data.email;
+            this.firstName = response.data.first_name;
+            this.lastName = response.data.last_name;
+            this.isAdmin = response.data.is_admin;
+            this.uid = response.data.uid;
+        }).finally(() => {
+            this.fetchingUser = false;
+        });
+    },
+    methods: {
+        onSubmit() {
+            const hasPassword = this.password.length;
+            const passwordConfirmed = this.password === this.confirmPassword;
+
+            if (hasPassword && passwordConfirmed) {
+                this.beeingUpdatedUser = true;
+
+                userService.updateUserByUid(this.uid, {
+                    password: this.password,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    isAdmin: this.isAdmin,
+                    email: this.email,
+                }).finally(() => {
+                    this.beeingUpdatedUser = false;
+                });
+            } else {
+                alert('Please, confirm password');
+            }
+        },
+    },
 };
 </script>
